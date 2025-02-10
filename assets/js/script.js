@@ -1,5 +1,4 @@
 document.addEventListener('DOMContentLoaded', () => {
-  // 根据系统设置或本地存储的偏好设置来应用主题
   const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
   const savedTheme = localStorage.getItem('theme');
   const theme = savedTheme || (prefersDark ? 'dark' : 'light');
@@ -7,7 +6,9 @@ document.addEventListener('DOMContentLoaded', () => {
   updateThemeToggle(theme);
   
   // 初始化 Lucide 图标
-  lucide.createIcons();
+  if (typeof lucide !== 'undefined') {
+    lucide.createIcons();
+  }
 });
 
 function toggleTheme() {
