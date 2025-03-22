@@ -1,0 +1,33 @@
+{
+  "name": "f1justin.com",
+  "version": "1.0.0",
+  "description": "F1Justin的个人网站",
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/F1Justin/f1justin.com.git"
+  },
+  "keywords": [],
+  "author": "f1justin",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/F1Justin/f1justin.com/issues"
+  },
+  "homepage": "https://github.com/F1Justin/f1justin.com#readme",
+  "devDependencies": {
+    "astro": "^4.5.3"
+  },
+  "dependencies": {
+    "@astrojs/db": "^0.14.8",
+    "@astrojs/react": "^4.2.1",
+    "lucide-react": "^0.483.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  }
+}

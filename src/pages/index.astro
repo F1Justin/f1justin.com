@@ -1,0 +1,379 @@
+---
+import Layout from "../layouts/Layout.astro";
+import SocialIcons from "../components/SocialIcons";
+
+const interests = [
+  {
+    category: "计算机 & 编程",
+    items: [
+      "Arch Linux、Fedora，现使用 Debian / macOS（主要设备）",
+      "Vim（主要文本编辑器）/ Git CLI",
+      "服务器搭建（Minecraft、Nonebot等）",
+      "SQL（PostgreSQL）",
+      "Python（Nonebot插件、数据分析）",
+      "Swift（macOS应用）",
+      "CS50x（计算机基础学习）"
+    ],
+    icon: "💻"
+  },
+  {
+    category: "人工智能",
+    items: [
+      "对 LLM（大语言模型）感兴趣"
+    ],
+    icon: "🤖"
+  },
+  {
+    category: "DIY & 硬件",
+    items: [
+      "电脑硬件、路由器及OpenWrt、显示器",
+      "声卡、播放器、音响",
+      "热熔胶、焊锡",
+      "木工",
+      "手电筒"
+    ],
+    icon: "🔧"
+  },
+  {
+    category: "摄影",
+    items: [
+      "使用 手机 & 无人机"
+    ],
+    icon: "📷"
+  },
+  {
+    category: "设计",
+    items: [
+      "海报设计",
+      "字体 & 文章排版（LaTeX）",
+      "HDR内容创作"
+    ],
+    icon: "🎨"
+  },
+  {
+    category: "音乐",
+    items: [
+      "金属乐（Metallica、Iron Maiden、Nightwish、Sirenia）",
+      "古典乐（Vladimir Horowitz）",
+      "东方同人音乐（Demetori、群雨、Pizuya's Cell）",
+      "电子音乐（Monstercat厂牌）",
+      "竖笛 / CD收藏 / 电吉他学习中"
+    ],
+    icon: "🎵"
+  },
+  {
+    category: "游戏",
+    items: [
+      "东方Project（东方非想天则）",
+      "Minecraft（Velocity代理服务器）",
+      "坎巴拉太空计划",
+      "舞萌DX"
+    ],
+    icon: "🎮"
+  },
+  {
+    category: "运动",
+    items: [
+      "羽毛球 / 跑步 / 骑车"
+    ],
+    icon: "🏸"
+  }
+];
+
+const contactLinks = [
+  {
+    name: "GitHub",
+    url: "https://github.com/F1Justin",
+    icon: "github"
+  },
+  {
+    name: "Twitter",
+    url: "https://x.com/WV6LS",
+    icon: "twitter"
+  },
+  {
+    name: "Bilibili",
+    url: "https://space.bilibili.com/82513053",
+    icon: "tv"
+  }
+];
+---
+
+<Layout title="F1JUSTIN - 个人网站">
+  <section class="hero">
+    <div class="container">
+      <div class="display-text">F1JUSTIN</div>
+      <div class="quote">
+        <span id="german-quote"></span>
+        <div class="quote-translation">
+          <span id="chinese-quote"></span>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <section id="about" class="about-section">
+    <div class="container">
+      <h1>关于我</h1>
+      <div class="about-content">
+        <div class="about-image">
+          <img src="/images/avatar.jpg" alt="个人照片" />
+        </div>
+        <div class="about-text">
+          <p>
+            你好！我是 F1JUSTIN，一个充满好奇心的人，喜欢探索新技术和其他各类事物。
+          </p>
+          <p>
+            "Wir müssen wissen. Wir werden wissen."（我们必须知道，我们终将知道）是德国数学家希尔伯特的名言，也是我的座右铭（大概是吧）。
+            我觉得这代表了一种精神。
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <section class="interests-section">
+    <div class="container">
+      <h2>兴趣与技能</h2>
+      <div class="interests-container">
+        {interests.map((category) => (
+          <div class="interest-category">
+            <h3><span class="category-icon">{category.icon}</span> {category.category}</h3>
+            <ul>
+              {category.items.map((item) => (
+                <li>{item}</li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+  
+  <section id="contact" class="contact-section">
+    <div class="container">
+      <h2>联系我</h2>
+      <p>如果你感兴趣，或者想要了解更多信息，可以通过以下方式联系我：</p>
+      
+      <div class="contact-email">
+        <h3>Email</h3>
+        <a href="mailto:f1justin@outlook.com">f1justin@outlook.com</a>
+      </div>
+      
+      <div class="social-links-container">
+        <h3>社交媒体</h3>
+        <SocialIcons client:load />
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  /* 关于部分样式 */
+  .about-section {
+    background-color: color-mix(in srgb, var(--color-bg) 95%, var(--color-text) 5%);
+  }
+  
+  .about-content {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: var(--space-lg);
+    margin: var(--space-lg) 0;
+  }
+  
+  .about-image {
+    overflow: hidden;
+    border-radius: 50%;
+    width: 250px;
+    height: 250px;
+    justify-self: center;
+  }
+  
+  .about-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  /* 兴趣部分样式 */
+  .interests-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: var(--space-lg);
+    margin: var(--space-lg) 0;
+  }
+  
+  .interest-category {
+    background-color: color-mix(in srgb, var(--color-bg) 95%, var(--color-text) 5%);
+    padding: var(--space-md);
+    border-radius: 8px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+  }
+  
+  .interest-category:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+  }
+  
+  .category-icon {
+    margin-right: var(--space-xs);
+    font-size: 1.2em;
+  }
+  
+  .interest-category h3 {
+    margin-bottom: var(--space-sm);
+    border-bottom: 2px solid var(--color-accent);
+    padding-bottom: var(--space-xs);
+    display: inline-block;
+  }
+  
+  .interest-category ul {
+    list-style: none;
+    margin-left: var(--space-sm);
+  }
+  
+  .interest-category li {
+    margin-bottom: var(--space-xs);
+    position: relative;
+    padding-left: var(--space-sm);
+  }
+  
+  .interest-category li:before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    color: var(--color-accent);
+  }
+  
+  /* 联系部分样式 */
+  .contact-section {
+    background-color: color-mix(in srgb, var(--color-bg) 95%, var(--color-text) 5%);
+    padding-bottom: var(--space-xl);
+  }
+  
+  .contact-email {
+    margin: var(--space-md) 0;
+  }
+  
+  .contact-email a {
+    color: var(--color-accent);
+    text-decoration: underline;
+    font-weight: 500;
+  }
+  
+  .social-links-container {
+    margin-top: var(--space-md);
+  }
+  
+  /* 打字机光标效果 */
+  #german-quote::after,
+  #chinese-quote::after {
+    content: "|";
+    animation: blink 1s infinite;
+    font-weight: 400;
+  }
+  
+  #german-quote.typing-complete::after,
+  #chinese-quote.typing-complete::after {
+    content: "";
+    animation: none;
+  }
+  
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+  }
+  
+  /* 社交媒体链接样式 */
+  :global(.social-links) {
+    display: flex;
+    gap: var(--space-md);
+    margin-top: var(--space-sm);
+  }
+  
+  :global(.social-link) {
+    display: flex;
+    align-items: center;
+    color: var(--color-text);
+    text-decoration: none;
+    transition: color 0.3s ease, transform 0.3s ease;
+    padding: 8px 16px;
+    border-radius: 6px;
+    background-color: color-mix(in srgb, var(--color-bg) 90%, var(--color-text) 10%);
+  }
+  
+  :global(.social-link:hover) {
+    color: var(--color-accent);
+    transform: translateY(-3px);
+  }
+  
+  :global(.social-link svg) {
+    margin-right: var(--space-xs);
+  }
+  
+  @media (max-width: 768px) {
+    .about-content {
+      grid-template-columns: 1fr;
+    }
+    
+    .about-image {
+      margin: 0 auto;
+    }
+    
+    .interests-container {
+      grid-template-columns: 1fr;
+    }
+    
+    :global(.social-links) {
+      flex-direction: column;
+      gap: var(--space-sm);
+    }
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    if (typeof lucide !== 'undefined') {
+      lucide.createIcons();
+    }
+    
+    // 打字机效果
+    const germanText = "Wir müssen wissen. Wir werden wissen.";
+    const chineseText = "我们必须知道，我们必将知道。";
+    const germanElement = document.getElementById('german-quote');
+    const chineseElement = document.getElementById('chinese-quote');
+    
+    let germanIndex = 0;
+    let chineseIndex = 0;
+    let germanComplete = false;
+    
+    // 德文打字效果
+    function typeGerman() {
+      if (germanIndex < germanText.length) {
+        germanElement.textContent += germanText.charAt(germanIndex);
+        germanIndex++;
+        setTimeout(typeGerman, 120);
+      } else {
+        germanComplete = true;
+        germanElement.classList.add('typing-complete');
+        // 德文完成后开始打中文
+        setTimeout(typeChinese, 500);
+      }
+    }
+    
+    // 中文打字效果
+    function typeChinese() {
+      if (chineseIndex < chineseText.length) {
+        chineseElement.textContent += chineseText.charAt(chineseIndex);
+        chineseIndex++;
+        setTimeout(typeChinese, 120);
+      } else {
+        // 中文完成后移除光标
+        chineseElement.classList.add('typing-complete');
+      }
+    }
+    
+    // 开始打字效果
+    setTimeout(typeGerman, 1000);
+  });
+</script>
