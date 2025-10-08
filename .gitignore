@@ -63,3 +63,5 @@ debug/
 # Cache directories
 .cache/
 .tmp/
+# Astro local settings
+.astro/
