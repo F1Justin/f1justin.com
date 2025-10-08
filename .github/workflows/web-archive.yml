@@ -1,0 +1,49 @@
+name: Archive to Web Archive
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:  # 允许手动触发
+
+jobs:
+  archive:
+    runs-on: ubuntu-latest
+    name: 保存网站到互联网档案馆
+    
+    steps:
+      - name: 等待部署完成
+        run: |
+          echo "等待 60 秒以确保 Vercel 部署完成..."
+          sleep 60
+      
+      - name: 发送存档请求到 Web Archive
+        run: |
+          echo "正在向 Web Archive 发送存档请求..."
+          
+          # 定义要存档的页面列表
+          PAGES=(
+            "https://f1justin.com"
+            "https://f1justin.com/#about"
+            "https://f1justin.com/#contact"
+          )
+          
+          # 遍历每个页面并发送存档请求
+          for page in "${PAGES[@]}"; do
+            echo "📦 存档页面: $page"
+            curl -X GET "https://web.archive.org/save/$page" \
+              -H "User-Agent: Mozilla/5.0 (compatible; f1justin.com archiver)" \
+              -w "\n状态码: %{http_code}\n" \
+              --max-time 30 || true
+            sleep 2  # 避免请求过快
+          done
+          
+          echo ""
+          echo "✅ 所有存档请求已发送！"
+          echo "📦 可以在这里查看存档: https://web.archive.org/web/*/f1justin.com"
+      
+      - name: 存档完成通知
+        run: |
+          echo "✅ 网站已成功提交到 Internet Archive"
+          echo "🔗 查看历史快照: https://web.archive.org/web/*/f1justin.com"
+
