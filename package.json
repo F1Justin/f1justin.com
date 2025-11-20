@@ -21,7 +21,7 @@
   },
   "homepage": "https://github.com/F1Justin/f1justin.com#readme",
   "devDependencies": {
-    "astro": "^5.14.1"
+    "astro": "^5.15.9"
   },
   "dependencies": {
     "@astrojs/db": "^0.14.8",
