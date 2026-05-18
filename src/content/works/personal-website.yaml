@@ -1,0 +1,9 @@
+title: "个人网站"
+emoji: "🌐"
+tagline: "基于 Astro 构建的现代化个人主页"
+time_range: "2025-10 至今"
+links:
+  github: "https://github.com/F1Justin/f1justin.com"
+featured: true
+order: 3
+
