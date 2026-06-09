@@ -25,6 +25,7 @@ jobs:
           PAGES=(
             "https://f1justin.com"
             "https://f1justin.com/#about"
+            "https://f1justin.com/#friends"
             "https://f1justin.com/#contact"
           )
           
@@ -46,4 +47,3 @@ jobs:
         run: |
           echo "✅ 网站已成功提交到 Internet Archive"
           echo "🔗 查看历史快照: https://web.archive.org/web/*/f1justin.com"
-

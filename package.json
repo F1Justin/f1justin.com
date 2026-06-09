@@ -21,15 +21,14 @@
   },
   "homepage": "https://github.com/F1Justin/f1justin.com#readme",
   "devDependencies": {
-    "astro": "^6.3.3"
+    "astro": "^6.4.4"
   },
   "dependencies": {
-    "@astrojs/db": "^0.21.1",
-    "@astrojs/react": "^5.0.5",
+    "@astrojs/react": "^5.0.7",
     "@vercel/analytics": "^2.0.1",
     "@vercel/speed-insights": "^2.0.0",
-    "lucide-react": "^1.16.0",
-    "react": "^19.2.6",
-    "react-dom": "^19.2.6"
+    "react": "^19.2.7",
+    "react-dom": "^19.2.7",
+    "simple-icons": "^16.23.0"
   }
 }

@@ -1,18 +1,8 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import WorkCard from "../components/WorkCard.astro";
-import ThemeCard from "../components/ThemeCard.astro";
 import SocialIcons from "../components/SocialIcons";
-import { getCollection } from 'astro:content';
+import { friends } from "../data/friends";
 
-// 获取精选作品
-const allWorks = await getCollection('works');
-const featuredWorks = allWorks
-  .filter(work => work.data.featured)
-  .sort((a, b) => (a.data.order || 999) - (b.data.order || 999))
-  .slice(0, 4);
-
-// 兴趣与技能数据
 const interests = [
   {
     category: "计算机 & 编程",
@@ -20,8 +10,10 @@ const interests = [
       "Linux 桌面与服务器 (Arch、Fedora、Debian、macOS)",
       "Vim / Neovim & Git CLI 工作流",
       "Docker 与自托管服务部署",
+      "服务器运维（Minecraft、Nonebot 等）",
       "Python（数据分析 & Bot 插件）",
-      "Swift / SwiftUI（macOS 应用）"
+      "Swift / SwiftUI（macOS 应用）",
+      "SQL & PostgreSQL"
     ],
     icon: "💻"
   },
@@ -30,9 +22,20 @@ const interests = [
     items: [
       "本地 LLM 部署（Ollama / LM Studio）",
       "Prompt 工程 & Agent 架构",
-      "聊天机器人（Nonebot + API 集成）"
+      "聊天机器人（Nonebot + API 集成）",
+      "模型微调 & 推理性能优化"
     ],
     icon: "🤖"
+  },
+  {
+    category: "DIY & 硬件",
+    items: [
+      "自组 NAS 与家庭服务器",
+      "路由器 OpenWrt 刷机与调优",
+      "焊接、热熔胶、木工",
+      "便携手电 & 灯具改装"
+    ],
+    icon: "🔧"
   },
   {
     category: "摄影 & 多媒体",
@@ -44,18 +47,75 @@ const interests = [
     icon: "📷"
   },
   {
-    category: "DIY & 硬件",
+    category: "设计 & 排版",
     items: [
-      "自组 NAS 与家庭服务器",
-      "路由器 OpenWrt 刷机与调优",
-      "焊接、热熔胶、木工"
+      "海报与 Logo 视觉规范",
+      "LaTeX 长文与技术文档排版",
+      "HDR 内容创作",
+      "网页 UI / 互动组件设计"
     ],
-    icon: "🔧"
+    icon: "🎨"
+  },
+  {
+    category: "阅读 & 思考",
+    items: [
+      "思想史 / 社会学 / 哲学",
+      "科幻文学",
+      "亚文化研究与网络梗史",
+      "城市文化与交通系统观察"
+    ],
+    icon: "📚"
+  },
+  {
+    category: "音乐",
+    items: [
+      "金属乐（Metallica、Iron Maiden 等）",
+      "古典钢琴（Vladimir Horowitz）",
+      "东方同人音乐 & 同人社团",
+      "电吉他 & 竖笛学习"
+    ],
+    icon: "🎵"
+  },
+  {
+    category: "游戏 & 亚文化",
+    items: [
+      "东方 Project",
+      "Minecraft",
+      "坎巴拉太空计划",
+      "舞萌 DX"
+    ],
+    icon: "🎮"
+  },
+  {
+    category: "运动",
+    items: [
+      "羽毛球",
+      "偶尔骑行"
+    ],
+    icon: "🏸"
+  }
+];
+
+const contactLinks = [
+  {
+    name: "GitHub",
+    url: "https://github.com/F1Justin",
+    icon: "github"
+  },
+  {
+    name: "Twitter",
+    url: "https://twitter.com/WV6LS",
+    icon: "twitter"
+  },
+  {
+    name: "Bilibili",
+    url: "https://space.bilibili.com/82513053",
+    icon: "tv"
   }
 ];
 ---
 
-<Layout title="F1JUSTIN的自留地">
+<Layout title="F1JUSTIN - 个人网站">
   <section class="hero">
     <div class="container">
       <div class="display-text">F1JUSTIN</div>
@@ -68,36 +128,22 @@ const interests = [
     </div>
   </section>
   
-  <section class="about-section">
+  <section id="about" class="about-section">
     <div class="container">
-      <h2>关于我</h2>
+      <h1>关于我</h1>
       <div class="about-content">
         <div class="about-image">
-          <img src="/images/avatar.jpg" alt="F1JUSTIN" />
+          <img src="/images/avatar.jpg" alt="个人照片" />
         </div>
         <div class="about-text">
           <p>
             你好！我是 F1JUSTIN，一个充满好奇心的人，喜欢探索新技术和其他各类事物。
           </p>
           <p>
-            "Wir müssen wissen. Wir werden wissen."（我们必须知道，我们必将知道）是德国数学家希尔伯特的名言，也是我的座右铭。
-            我觉得这代表了一种精神——对知识的永恒追求。
+            "Wir müssen wissen. Wir werden wissen."（我们必须知道，我们终将知道）是德国数学家希尔伯特的名言，也是我的座右铭（大概是吧）。
+            我觉得这代表了一种精神。
           </p>
         </div>
-      </div>
-    </div>
-  </section>
-  
-  <section class="featured-works">
-    <div class="container">
-      <h2>精选作品</h2>
-      <div class="works-grid">
-        {featuredWorks.map((work) => (
-          <WorkCard work={work.data} variant="featured" />
-        ))}
-      </div>
-      <div class="view-more">
-        <a href="/works" class="view-more-link">查看更多作品 →</a>
       </div>
     </div>
   </section>
@@ -119,8 +165,39 @@ const interests = [
       </div>
     </div>
   </section>
+
+  <section id="friends" class="friends-section">
+    <div class="container">
+      <h2>友链</h2>
+      <div class="friends-container">
+        {friends.map((friend) => (
+          <a
+            class="friend-card"
+            href={friend.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={`${friend.name}: ${friend.description} ${friend.hoverNote}`}
+          >
+            {friend.avatar ? (
+              <img src={friend.avatar} alt={`${friend.name} 头像`} />
+            ) : (
+              <span class="friend-avatar" aria-hidden="true">{friend.initial}</span>
+            )}
+            <div class="friend-info">
+              <h3>{friend.name}</h3>
+              <p>{friend.description}</p>
+              <span class="friend-meta">
+                <span class="friend-url">{friend.url.replace(/^https?:\/\//, "")}</span>
+                <span class="friend-hover-note">{friend.hoverNote}</span>
+              </span>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
   
-  <section class="contact-section">
+  <section id="contact" class="contact-section">
     <div class="container">
       <h2>联系我</h2>
       <p>如果你感兴趣，或者想要了解更多信息，可以通过以下方式联系我：</p>
@@ -139,35 +216,11 @@ const interests = [
 </Layout>
 
 <style>
-  .hero {
-    min-height: 80vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    background-color: var(--color-bg) !important;
-  }
-
-  .quote {
-    font-family: var(--font-serif);
-    font-size: clamp(1.5rem, 3vw, 2.5rem);
-    max-width: 800px;
-    line-height: 1.3;
-    margin-bottom: var(--space-lg);
-  }
-
-  .quote-translation {
-    font-family: var(--font-serif);
-    font-size: clamp(1rem, 2vw, 1.75rem);
-    margin-top: var(--space-sm);
-    color: var(--color-text-secondary);
-  }
-
-  /* 关于我部分 */
+  /* 关于部分样式 */
   .about-section {
-    padding: var(--space-xl) 0;
     background-color: color-mix(in srgb, var(--color-bg) 95%, var(--color-text) 5%);
   }
-
+  
   .about-content {
     display: grid;
     grid-template-columns: 1fr 2fr;
@@ -189,62 +242,24 @@ const interests = [
     object-fit: cover;
   }
   
-  .about-text p {
-    line-height: 1.8;
-  }
-
-  /* 精选作品 */
-  .featured-works {
-    padding: var(--space-xl) 0;
-  }
-
-  .works-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: var(--space-md);
-    margin: var(--space-lg) 0;
-  }
-
-  .view-more {
-    text-align: center;
-    margin-top: var(--space-lg);
-  }
-
-  .view-more-link {
-    font-size: 1.1em;
-    color: var(--color-accent);
-    text-decoration: none;
-    transition: opacity 0.2s ease;
-  }
-
-  .view-more-link:hover {
-    opacity: 0.7;
-  }
-
-  /* 兴趣与技能 */
-  .interests-section {
-    padding: var(--space-xl) 0;
-    background-color: color-mix(in srgb, var(--color-bg) 95%, var(--color-text) 5%);
-  }
-  
+  /* 兴趣部分样式 */
   .interests-container {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
     gap: var(--space-lg);
     margin: var(--space-lg) 0;
   }
   
   .interest-category {
-    background-color: var(--color-bg);
-    border: 1px solid var(--color-text);
-    border-radius: 8px;
+    background-color: color-mix(in srgb, var(--color-bg) 95%, var(--color-text) 5%);
     padding: var(--space-md);
-    transition: border-color 0.3s ease, background-color 0.3s ease;
+    border-radius: 8px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
   }
   
   .interest-category:hover {
-    border-color: var(--color-accent);
-    background-color: color-mix(in srgb, var(--color-bg) 98%, var(--color-accent) 2%);
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
   }
   
   .category-icon {
@@ -268,7 +283,6 @@ const interests = [
     margin-bottom: var(--space-xs);
     position: relative;
     padding-left: var(--space-sm);
-    line-height: 1.8;
   }
   
   .interest-category li:before {
@@ -278,9 +292,106 @@ const interests = [
     color: var(--color-accent);
   }
 
-  /* 联系方式 */
+  /* 友链部分样式 */
+  .friends-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 560px));
+    gap: var(--space-md);
+    justify-content: start;
+    margin: var(--space-lg) 0;
+  }
+
+  .friend-card {
+    display: grid;
+    grid-template-columns: 84px 1fr;
+    gap: var(--space-md);
+    align-items: center;
+    color: var(--color-text);
+    text-decoration: none;
+    background-color: color-mix(in srgb, var(--color-bg) 95%, var(--color-text) 5%);
+    padding: var(--space-md);
+    border-radius: 8px;
+    border: 1px solid color-mix(in srgb, var(--color-text) 10%, transparent);
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+  }
+
+  .friend-card:hover,
+  .friend-card:focus-visible {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    outline: none;
+  }
+
+  .friend-card img {
+    width: 84px;
+    height: 84px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+
+  .friend-avatar {
+    display: grid;
+    place-items: center;
+    width: 84px;
+    height: 84px;
+    border-radius: 50%;
+    background-color: color-mix(in srgb, var(--color-accent) 12%, var(--color-bg) 88%);
+    color: var(--color-text);
+    font-family: var(--font-serif);
+    font-size: 2.25rem;
+    font-weight: 700;
+  }
+
+  .friend-info h3 {
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    margin-bottom: var(--space-xs);
+  }
+
+  .friend-info p {
+    color: var(--color-text-secondary);
+    margin-bottom: var(--space-xs);
+  }
+
+  .friend-meta {
+    display: block;
+    position: relative;
+    min-height: 1.5rem;
+    overflow: hidden;
+  }
+
+  .friend-url,
+  .friend-hover-note {
+    display: block;
+    color: var(--color-accent);
+    font-size: 0.95rem;
+    font-weight: 500;
+    overflow-wrap: anywhere;
+    transition: opacity 0.25s ease, transform 0.25s ease;
+  }
+
+  .friend-hover-note {
+    position: absolute;
+    inset: 0 auto auto 0;
+    opacity: 0;
+    transform: translateY(0.6rem);
+  }
+
+  .friend-card:hover .friend-url,
+  .friend-card:focus-visible .friend-url {
+    opacity: 0;
+    transform: translateY(-0.6rem);
+  }
+
+  .friend-card:hover .friend-hover-note,
+  .friend-card:focus-visible .friend-hover-note {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  
+  /* 联系部分样式 */
   .contact-section {
-    padding: var(--space-xl) 0;
+    background-color: var(--color-bg);
+    padding-bottom: var(--space-xl);
   }
   
   .contact-email {
@@ -296,7 +407,27 @@ const interests = [
   .social-links-container {
     margin-top: var(--space-md);
   }
-
+  
+  /* 打字机光标效果 */
+  #german-quote::after,
+  #chinese-quote::after {
+    content: "|";
+    animation: blink 1s infinite;
+    font-weight: 400;
+  }
+  
+  #german-quote.typing-complete::after,
+  #chinese-quote.typing-complete::after {
+    content: "";
+    animation: none;
+  }
+  
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+  }
+  
+  /* 社交媒体链接样式 */
   :global(.social-links) {
     display: flex;
     gap: var(--space-md);
@@ -311,38 +442,18 @@ const interests = [
     transition: color 0.3s ease, transform 0.3s ease;
     padding: 8px 16px;
     border-radius: 6px;
-    border: 1px solid var(--color-text);
-    background-color: var(--color-bg);
+    background-color: color-mix(in srgb, var(--color-bg) 90%, var(--color-text) 10%);
   }
   
   :global(.social-link:hover) {
     color: var(--color-accent);
-    border-color: var(--color-accent);
+    transform: translateY(-3px);
   }
   
   :global(.social-link svg) {
     margin-right: var(--space-xs);
   }
-
-  /* 打字机光标效果 */
-  #german-quote::after,
-  #chinese-quote::after {
-    content: "|";
-    animation: blink 1s infinite;
-    font-weight: 400;
-  }
-
-  #german-quote.typing-complete::after,
-  #chinese-quote.typing-complete::after {
-    content: "";
-    animation: none;
-  }
-
-  @keyframes blink {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0; }
-  }
-
+  
   @media (max-width: 768px) {
     .about-content {
       grid-template-columns: 1fr;
@@ -351,24 +462,35 @@ const interests = [
     .about-image {
       margin: 0 auto;
     }
-
-    .works-grid {
-      grid-template-columns: 1fr;
-    }
     
     .interests-container {
       grid-template-columns: 1fr;
     }
 
-    :global(.social-links) {
-      flex-direction: column;
+    .friend-card {
+      grid-template-columns: 56px 1fr;
       gap: var(--space-sm);
     }
-  }
 
-  @media (min-width: 769px) and (max-width: 1024px) {
-    .works-grid {
-      grid-template-columns: repeat(2, 1fr);
+    .friend-card img {
+      width: 56px;
+      height: 56px;
+    }
+
+    .friend-avatar {
+      width: 56px;
+      height: 56px;
+      font-size: 1.5rem;
+    }
+    
+    :global(.social-links) {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: var(--space-sm);
+    }
+
+    :global(.social-link) {
+      width: fit-content;
     }
   }
 </style>
@@ -377,36 +499,41 @@ const interests = [
   document.addEventListener('DOMContentLoaded', () => {
     // 打字机效果
     const germanText = "Wir müssen wissen. Wir werden wissen.";
-    const chineseText = "我们必须知道，我们必将知道。";
+    const chineseText = "我们必须知道，我们终将知道。";
     const germanElement = document.getElementById('german-quote');
     const chineseElement = document.getElementById('chinese-quote');
     
-    if (!germanElement || !chineseElement) return;
-    
     let germanIndex = 0;
     let chineseIndex = 0;
+    let germanComplete = false;
     
+    // 德文打字效果
     function typeGerman() {
       if (germanIndex < germanText.length) {
         germanElement.textContent += germanText.charAt(germanIndex);
         germanIndex++;
         setTimeout(typeGerman, 120);
       } else {
+        germanComplete = true;
         germanElement.classList.add('typing-complete');
+        // 德文完成后开始打中文
         setTimeout(typeChinese, 500);
       }
     }
     
+    // 中文打字效果
     function typeChinese() {
       if (chineseIndex < chineseText.length) {
         chineseElement.textContent += chineseText.charAt(chineseIndex);
         chineseIndex++;
         setTimeout(typeChinese, 120);
       } else {
+        // 中文完成后移除光标
         chineseElement.classList.add('typing-complete');
       }
     }
     
+    // 开始打字效果
     setTimeout(typeGerman, 1000);
   });
 </script>
