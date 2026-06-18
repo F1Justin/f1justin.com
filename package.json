@@ -20,8 +20,11 @@
     "url": "https://github.com/F1Justin/f1justin.com/issues"
   },
   "homepage": "https://github.com/F1Justin/f1justin.com#readme",
+  "overrides": {
+    "esbuild": "0.28.1"
+  },
   "devDependencies": {
-    "astro": "^6.4.4"
+    "astro": "^6.4.8"
   },
   "dependencies": {
     "@astrojs/react": "^5.0.7",
