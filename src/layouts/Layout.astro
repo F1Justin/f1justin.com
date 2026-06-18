@@ -10,7 +10,43 @@ interface Props {
   description?: string;
 }
 
-const { title, description = "F1Justin的个人网站" } = Astro.props;
+const siteName = "F1justin";
+const { title, description = "F1justin 的个人主页，记录技术、摄影、音乐、游戏与个人项目。" } = Astro.props;
+const canonicalUrl = new URL(Astro.url.pathname, Astro.site ?? Astro.url.origin);
+const profileImageUrl = new URL("/images/avatar.jpg", canonicalUrl);
+const structuredData = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": `${canonicalUrl.origin}/#website`,
+      url: `${canonicalUrl.origin}/`,
+      name: siteName,
+      alternateName: "f1justin.com"
+    },
+    {
+      "@type": "ProfilePage",
+      "@id": `${canonicalUrl.origin}/#profile`,
+      url: canonicalUrl.href,
+      name: title,
+      isPartOf: { "@id": `${canonicalUrl.origin}/#website` },
+      mainEntity: {
+        "@type": "Person",
+        "@id": `${canonicalUrl.origin}/#person`,
+        name: siteName,
+        identifier: siteName,
+        url: `${canonicalUrl.origin}/`,
+        image: profileImageUrl.href,
+        sameAs: [
+          "https://github.com/F1Justin",
+          "https://twitter.com/WV6LS",
+          "https://space.bilibili.com/82513053",
+          "https://t.me/akshdgka"
+        ]
+      }
+    }
+  ]
+};
 ---
 
 <!DOCTYPE html>
@@ -19,11 +55,24 @@ const { title, description = "F1Justin的个人网站" } = Astro.props;
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalUrl} />
+    <meta property="og:type" content="profile" />
+    <meta property="og:site_name" content={siteName} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:image" content={profileImageUrl} />
+    <meta property="og:image:alt" content={`${siteName} 个人头像`} />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={profileImageUrl} />
     <meta name="color-scheme" content="light dark" />
     <meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff" />
     <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#121212" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <title>{title}</title>
+    <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
   </head>
   <body>
     <Header />

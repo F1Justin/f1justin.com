@@ -1,7 +1,7 @@
 {
   "name": "f1justin.com",
   "version": "1.0.0",
-  "description": "F1Justin的个人网站",
+  "description": "F1justin 的个人网站",
   "type": "module",
   "scripts": {
     "dev": "astro dev",
