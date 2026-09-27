@@ -24,7 +24,7 @@
     "esbuild": "0.28.1"
   },
   "devDependencies": {
-    "astro": "^7.3.2"
+    "astro": "^7.3.5"
   },
   "dependencies": {
     "@astrojs/react": "^6.0.5",
@@ -32,6 +32,6 @@
     "@vercel/speed-insights": "^2.0.0",
     "react": "^19.3.0",
     "react-dom": "^19.3.0",
-    "simple-icons": "^16.30.0"
+    "simple-icons": "^16.32.0"
   }
 }
